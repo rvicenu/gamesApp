@@ -37,9 +37,9 @@ const CardGame = ({ game }) => {
     };
     return (
         <View>
-        <TouchableOpacity
-            onPress={() => fetchDataByGame(game_id)}
-        >
+            <TouchableOpacity
+                onPress={() => fetchDataByGame(game_id)}
+            >
                 <Image style={styles.cardImage} source={{uri: game.thumbnail}} />
             </TouchableOpacity>
         </View>

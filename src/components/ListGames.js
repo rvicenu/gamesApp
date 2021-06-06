@@ -4,7 +4,7 @@ import CardGame from './CardGame';
 
 const styles = StyleSheet.create({
     container: {
-        margin: 10,
+        margin: 5,
     },
     text: {
         color: '#ee5253',

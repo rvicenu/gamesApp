@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     container: {
-        margin: 15,
+        marginHorizontal: 15,
     },
     avatar: {
         alignSelf: 'center',
