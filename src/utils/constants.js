@@ -8,6 +8,8 @@ export const constants = {
     game_get: 'game?id=',
 };
 
+export const profileAsyncStorageKey = 'profile';
+
 // const CORS = 'https://cors-anywhere.herokuapp.com/';
 
 

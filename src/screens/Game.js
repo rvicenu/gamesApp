@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRoute } from '@react-navigation/core';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native';
 import ImagesSlider from './../components/ImagesSlider';
 import NotFound from './../components/NotFound';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -64,36 +64,38 @@ const Game = () => {
     const [game] = useState(routes.params.data);
     
     return (
-        <ScrollView style={styles.background}>
-            <View style={styles.container}>
-                <Text style={styles.title}> 🎮 {game.title} 🎮 </Text>
-                <Image style={styles.image} source={{uri: game.thumbnail}} />
+        <SafeAreaView style={styles.background}>
+            <ScrollView>
+                <View style={styles.container}>
+                    <Text style={styles.title}> 🎮 {game.title} 🎮 </Text>
+                    <Image style={styles.image} source={{uri: game.thumbnail}} />
 
-                <View style={styles.containerInfo}>
-                    <View style={styles.containerInfoLeft}>
-                        <Text style={styles.text}>Platform: </Text>
-                        <Text style={styles.text}>Genre: </Text>
-                        <Text style={styles.text}>Publisher: </Text>
-                        <Text style={styles.text}>Developer: </Text>
-                        <Text style={styles.text}>Release date: </Text>
-                        <Text style={styles.text}>Resume: </Text>
+                    <View style={styles.containerInfo}>
+                        <View style={styles.containerInfoLeft}>
+                            <Text style={styles.text}>Platform: </Text>
+                            <Text style={styles.text}>Genre: </Text>
+                            <Text style={styles.text}>Publisher: </Text>
+                            <Text style={styles.text}>Developer: </Text>
+                            <Text style={styles.text}>Release date: </Text>
+                            <Text style={styles.text}>Resume: </Text>
+                        </View>
+
+                        <View style={styles.containerInfoRight}>
+                            <Text style={styles.textInfo}>{game.platform}</Text>
+                            <Text style={styles.textInfo}>{game.genre}</Text>
+                            <Text style={styles.textInfo}>{game.publisher}</Text>
+                            <Text style={styles.textInfo}>{game.developer}</Text>
+                            <Text style={styles.textInfo}>{game.release_date}</Text>
+                            <Text style={styles.textInfo}>{game.short_description}</Text>
+                        </View>
                     </View>
 
-                    <View style={styles.containerInfoRight}>
-                        <Text style={styles.textInfo}>{game.platform}</Text>
-                        <Text style={styles.textInfo}>{game.genre}</Text>
-                        <Text style={styles.textInfo}>{game.publisher}</Text>
-                        <Text style={styles.textInfo}>{game.developer}</Text>
-                        <Text style={styles.textInfo}>{game.release_date}</Text>
-                        <Text style={styles.textInfo}>{game.short_description}</Text>
-                    </View>
+                    { 
+                        !game.screenshots ? <NotFound text="Este juego no tiene screenshots." /> : <ImagesSlider screenshots={game.screenshots} text="Screenshots:" /> 
+                    }
                 </View>
-
-                { 
-                    !game.screenshots ? <NotFound text="Este juego no tiene screenshots." /> : <ImagesSlider screenshots={game.screenshots} text="Screenshots:" /> 
-                }
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </SafeAreaView>
     );
 };
 

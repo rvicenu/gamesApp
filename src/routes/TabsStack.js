@@ -1,10 +1,11 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeNavigation from './HomeStack';
-import GameNavigation from './GameStack';
+import SearchNavigation from './SearchStack';
+import FavoritesNavigation from './FavoritesStack';
+import ProfileNavigation from './ProfileStack';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-import MaterialIconsIcon from 'react-native-vector-icons/MaterialIcons';
 import { View, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -14,12 +15,12 @@ const styles = StyleSheet.create({
     },
 });
 
-const BottomTabs = createBottomTabNavigator();
+const PrincipalTabs = createBottomTabNavigator();
 
-const BottomNavigation = () => {
+const TabNavigation = () => {
 
     return (
-        <BottomTabs.Navigator
+        <PrincipalTabs.Navigator
             tabBarOptions={{
                 showLabel: true,
                 activeTintColor: '#ee5253',
@@ -30,7 +31,7 @@ const BottomNavigation = () => {
                 },
             }}
         >
-            <BottomTabs.Screen 
+            <PrincipalTabs.Screen 
                 name="Home" 
                 component={HomeNavigation}
                 options={{
@@ -46,9 +47,9 @@ const BottomNavigation = () => {
                 }}
             />
 
-            <BottomTabs.Screen 
+            <PrincipalTabs.Screen 
                 name="Search" 
-                component={GameNavigation}
+                component={SearchNavigation}
                 options={{
                     tabBarIcon: ({ focused, color }) => {
                         FontAwesomeIcon.loadFont(); // IOS
@@ -62,9 +63,9 @@ const BottomNavigation = () => {
                 }}
             />
 
-            <BottomTabs.Screen 
+            <PrincipalTabs.Screen 
                 name="Favorites" 
-                component={GameNavigation}
+                component={FavoritesNavigation}
                 options={{
                     tabBarIcon: ({ focused, color }) => {
                         FontAwesomeIcon.loadFont(); // IOS
@@ -78,9 +79,9 @@ const BottomNavigation = () => {
                 }}
             />
 
-            <BottomTabs.Screen 
+            <PrincipalTabs.Screen 
                 name="Profile" 
-                component={GameNavigation}
+                component={ProfileNavigation}
                 options={{
                     tabBarIcon: ({ focused, color }) => {
                         FontAwesomeIcon.loadFont(); // IOS
@@ -95,8 +96,8 @@ const BottomNavigation = () => {
             />
 
 
-        </BottomTabs.Navigator>
+        </PrincipalTabs.Navigator>
     );
 };
 
-export default BottomNavigation;
+export default TabNavigation;
