@@ -81,7 +81,7 @@ const Profile = () => {
             <View style={styles.container}>
                 <Image style={styles.avatar} source={defaultAvatar} />
                 <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('EditProfile', profileData)}>
-                    <Text style={styles.editButtonText}>Editar Perfil</Text>
+                    <Text style={styles.editButtonText}>Edit Profile</Text>
                 </TouchableOpacity>
 
                 <View style={styles.userInfo}>

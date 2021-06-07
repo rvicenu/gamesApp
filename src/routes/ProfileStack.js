@@ -9,13 +9,14 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#341f97',
         paddingVertical: 15,
+        paddingLeft: 10,
         borderBottomWidth: 2,
         borderColor: '#ee5253',
     },
     textHeader: {
         color: '#ee5253',
         fontSize: 25,
-        textAlign: 'center',
+        textAlign: 'left',
     },
     icon: {
         paddingLeft: 10,
