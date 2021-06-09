@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, FlatList } from 'react-native';
+import { StyleSheet, SafeAreaView, FlatList } from 'react-native';
 import CardGame from './CardGame';
 
 const styles = StyleSheet.create({
@@ -19,20 +19,23 @@ class ListGames extends PureComponent {
     };
 
     render() {
-        const { games } = this.props;
+        const { games, cardGameStyle } = this.props;
 
         return (
             <SafeAreaView style={styles.container}>
-                <FlatList 
-                    style={styles.container}
-                    data={games}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    keyExtractor={game => {
-                        return game.id;
-                    }}
-                    renderItem={({ item: game }) => <CardGame game={game} />}
-                />
+                {
+                    (games && Object.keys(games).length !== 0) && 
+                        <FlatList 
+                            style={styles.container}
+                            data={games}
+                            horizontal={cardGameStyle === "horizontal" ? true : false}
+                            showsHorizontalScrollIndicator={false}
+                            keyExtractor={game => {
+                                return game.id;
+                            }}
+                            renderItem={({ item: game }) => <CardGame cardGameStyle={cardGameStyle} game={game} />}
+                        />
+                }
             </SafeAreaView>
         );
     };

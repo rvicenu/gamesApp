@@ -3,12 +3,13 @@ import { View, Text, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
         alignItems: 'center',
-        marginTop: 70,
+        justifyContent: 'center',
     },
     text: {
         color: '#ee5253',
-        fontSize: 15,
+        fontSize: 30,
     },
 });
 

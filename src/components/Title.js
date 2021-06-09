@@ -12,13 +12,19 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
     },
+    titleResults: {
+        color: '#ee5253',
+        fontSize: 23,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
 });
 
 
 const Title = ({ text }) => {
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.title}> 🎮 {text}</Text>
+            <Text style={text === "Results" ? styles.titleResults : styles.title}> {text !== "Results" ? `🎮  ${text}` : `🕹 ${text} 🕹` }</Text>
         </SafeAreaView>
     );
 };

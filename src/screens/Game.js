@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useRoute } from '@react-navigation/core';
 import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native';
-import ImagesSlider from './../components/ImagesSlider';
-import NotFound from './../components/NotFound';
+import ImagesSlider from '../components/ImagesSlider';
+import NotFound from '../components/NotFound';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const styles = StyleSheet.create({
@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
 const Game = () => {
     const routes = useRoute();
     const [game] = useState(routes.params.data);
-    
     return (
         <SafeAreaView style={styles.background}>
             <ScrollView>

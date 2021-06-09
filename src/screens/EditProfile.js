@@ -75,7 +75,7 @@ const EditProfile = () => {
             >  
                 <View>
                     <View style={styles.container}>
-                        <Text style={styles.title}>👾 Editar Perfil 👾 </Text>
+                        <Text style={styles.title}>👾 Edit Profile 👾 </Text>
                         <TextInput
                             style={styles.textInput}
                             placeholder="Name"

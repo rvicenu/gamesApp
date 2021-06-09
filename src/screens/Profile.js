@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
 const Profile = () => {
 
     const navigation = useNavigation();
-    const [isLoading, setIsLoading] = useState(false);
+    // const [isLoading, setIsLoading] = useState(false);
     const [profileData, setProfileData] = useState({});
 
     const [userDefaultData] = useState({

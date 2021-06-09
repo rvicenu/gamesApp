@@ -3,6 +3,7 @@ import {
   StatusBar,
 } from 'react-native';
 import LoginContext from './contexts/LoginContext';
+import GamesContext from './contexts/GamesContext';
 
 import RootNavigation from './routes/Root';
 
@@ -11,7 +12,9 @@ const App = () => {
     <Fragment>
       <StatusBar barStyle={'dark-content'} />
       <LoginContext>
-        <RootNavigation />
+        <GamesContext>
+          <RootNavigation />
+        </GamesContext>
       </LoginContext>
     </Fragment>
   );
