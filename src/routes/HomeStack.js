@@ -59,7 +59,11 @@ const HomeNavigation = ({navigation}) => {
                 component={Game} 
                 options={{
                     header: () => (
-                        <TouchableOpacity style={styles.container} onPress={() => navigation.pop()}>
+                        <TouchableOpacity style={styles.container} onPress={() => {
+                            if(navigation.canGoBack()) {
+                                navigation.pop();
+                            }
+                        }}>
                             <AntIcon style={styles.backIcon} name="arrowleft" size={28} />
                         </TouchableOpacity>
                     ),

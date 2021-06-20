@@ -45,7 +45,11 @@ const ProfileNavigation = ({navigation}) => (
             component={EditProfile} 
             options={{
                 header: () => (
-                    <TouchableOpacity style={styles.container} onPress={() => navigation.pop()}>
+                    <TouchableOpacity style={styles.container} onPress={() => {
+                        if(navigation.canGoBack()) {
+                            navigation.pop();
+                        }
+                    }}>
                         <AntIcon style={styles.icon} name="arrowleft" size={28} />
                     </TouchableOpacity>
                 ),

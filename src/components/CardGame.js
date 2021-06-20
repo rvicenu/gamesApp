@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const CardGame = ({ game, cardGameStyle }) => {
+const CardGame = ({ game, cardGameStyle, fav }) => {
     const navigation = useNavigation();
 
     const game_id = game.id;
@@ -50,10 +50,16 @@ const CardGame = ({ game, cardGameStyle }) => {
                 timeout: 3000,
             });
     
+            // console.log({fav});
             if (status === 200) {
                 if (cardGameStyle === "vertical") {
-                    navigation.navigate('GameSearch', {data});
+                    if (fav) {
+                        navigation.navigate('GameFavorites', {data});
+                    } else {
+                        navigation.navigate('GameSearch', {data});
+                    }
                 } else {
+                    // console.log({setIsFavorite});
                     navigation.navigate('Game', {data});
                 }
             }

@@ -19,7 +19,7 @@ class ListGames extends PureComponent {
     };
 
     render() {
-        const { games, cardGameStyle } = this.props;
+        const { games, cardGameStyle, fav } = this.props;
 
         return (
             <SafeAreaView style={styles.container}>
@@ -33,7 +33,8 @@ class ListGames extends PureComponent {
                             keyExtractor={game => {
                                 return game.id;
                             }}
-                            renderItem={({ item: game }) => <CardGame cardGameStyle={cardGameStyle} game={game} />}
+                            contentContainerStyle={{ paddingBottom: cardGameStyle === "vertical" ? 140 : 0 }}
+                            renderItem={({ item: game }) => <CardGame fav={fav} cardGameStyle={cardGameStyle} game={game} />}
                         />
                 }
             </SafeAreaView>
@@ -42,3 +43,6 @@ class ListGames extends PureComponent {
 };
 
 export default ListGames;
+
+// Traer acá la funcionalidad de filtrar los favs del storage
+// y ir pasando la data por props hasta llegar a favoriteButton

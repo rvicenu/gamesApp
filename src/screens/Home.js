@@ -29,55 +29,59 @@ class Home extends PureComponent {
             cardGames: [],
             socialGames: [],
             fightingGames: [],
+            isFavorite: false,
         };
     };
 
     componentDidMount = () => {
-        this.filterGames();
+        const { games } = this.context;
+
+        this.filterGames(games);
         this.fetchLatestGames();
     }
 
-    filterGames = () => {
-        const { games } = this.context;
-        
-        const strategyGames = games.filter((game) =>
-            game.genre.includes('Strategy'),
-        );
+    filterGames = (games) => {
+        if (games.length > 0) {
+            const strategyGames = games.filter((game) =>
+                game.genre.includes('Strategy'),
+            );
+    
+            const MMORPGGames = games.filter((game) =>
+                game.genre.includes('MMORPG'),
+            );
+    
+            const fantasyGames = games.filter((game) =>
+                game.genre.includes('Fantasy'),
+            );
+    
+            const shooterGames = games.filter((game) =>
+                game.genre.includes('Shooter'),
+            );
+    
+            const cardGames = games.filter((game) =>
+                game.genre.includes('Card Game'),
+            );
+    
+            const socialGames = games.filter((game) =>
+                game.genre.includes('Social'),
+            );
+    
+            const fightingGames = games.filter((game) =>
+                game.genre.includes('Fighting'),
+            );
+            
+            this.setState({
+                games,
+                strategyGames,
+                MMORPGGames,
+                fantasyGames,
+                shooterGames,
+                cardGames,
+                socialGames,
+                fightingGames,
+            });
+        }
 
-        const MMORPGGames = games.filter((game) =>
-            game.genre.includes('MMORPG'),
-        );
-
-        const fantasyGames = games.filter((game) =>
-            game.genre.includes('Fantasy'),
-        );
-
-        const shooterGames = games.filter((game) =>
-            game.genre.includes('Shooter'),
-        );
-
-        const cardGames = games.filter((game) =>
-            game.genre.includes('Card Game'),
-        );
-
-        const socialGames = games.filter((game) =>
-            game.genre.includes('Social'),
-        );
-
-        const fightingGames = games.filter((game) =>
-            game.genre.includes('Fighting'),
-        );
-
-        this.setState({
-            games,
-            strategyGames,
-            MMORPGGames,
-            fantasyGames,
-            shooterGames,
-            cardGames,
-            socialGames,
-            fightingGames,
-        });
 
     };
 
@@ -105,6 +109,12 @@ class Home extends PureComponent {
 
     };
 
+    setIsFavorite = (isFavorite) => {
+        this.setState({
+            isFavorite: !isFavorite,
+        });
+    };
+
     render () {
         const { 
                 latestGames, 
@@ -114,34 +124,36 @@ class Home extends PureComponent {
                 shooterGames, 
                 cardGames,
                 socialGames, 
-                fightingGames } = this.state;
+                fightingGames,
+                isFavorite
+        } = this.state;
 
         return (
             <SafeAreaView style={styles.container}>
                 <ScrollView>
                     <Title text="Latest Games" />
-                    <ListGames cardGameStyle="horizontal" games={latestGames} />
+                    <ListGames isFavorite={isFavorite} setIsFavorite={this.setIsFavorite} cardGameStyle="horizontal" games={latestGames} />
 
                     <Title text="Strategy Games" />
-                    <ListGames cardGameStyle="horizontal" games={strategyGames} />
+                    <ListGames isFavorite={isFavorite} setIsFavorite={this.setIsFavorite} cardGameStyle="horizontal" games={strategyGames} />
 
                     <Title text="MMORPG Games" />
-                    <ListGames cardGameStyle="horizontal" games={MMORPGGames} />
+                    <ListGames isFavorite={isFavorite} setIsFavorite={this.setIsFavorite} cardGameStyle="horizontal" games={MMORPGGames} />
 
                     <Title text="Shooter Games" />
-                    <ListGames cardGameStyle="horizontal" games={shooterGames} />
+                    <ListGames isFavorite={isFavorite} setIsFavorite={this.setIsFavorite} cardGameStyle="horizontal" games={shooterGames} />
 
                     <Title text="Card Games" />
-                    <ListGames cardGameStyle="horizontal" games={cardGames} />
+                    <ListGames isFavorite={isFavorite} setIsFavorite={this.setIsFavorite} cardGameStyle="horizontal" games={cardGames} />
                     
                     <Title text="Social Games" />
-                    <ListGames cardGameStyle="horizontal" games={socialGames} />
+                    <ListGames isFavorite={isFavorite} setIsFavorite={this.setIsFavorite} cardGameStyle="horizontal" games={socialGames} />
                     
                     <Title text="Fighting Games" />
-                    <ListGames cardGameStyle="horizontal" games={fightingGames} />
+                    <ListGames isFavorite={isFavorite} setIsFavorite={this.setIsFavorite} cardGameStyle="horizontal" games={fightingGames} />
                     
                     <Title text="Fantasy Games" />
-                    <ListGames cardGameStyle="horizontal" games={fantasyGames} />
+                    <ListGames isFavorite={isFavorite} setIsFavorite={this.setIsFavorite} cardGameStyle="horizontal" games={fantasyGames} />
                     
                 </ScrollView>
             </SafeAreaView>
@@ -150,3 +162,5 @@ class Home extends PureComponent {
 };
 
 export default Home;
+
+// VerifyData En todos los inicios del proceso (en CardGame salen todos)

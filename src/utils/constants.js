@@ -6,3 +6,4 @@ export const constants = {
 };
 
 export const profileAsyncStorageKey = 'profile';
+export const favoritesGamesAsyncStorageKey = 'favorites';

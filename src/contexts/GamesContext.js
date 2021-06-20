@@ -1,17 +1,19 @@
 import React, {createContext, useEffect, useState} from 'react';
 import { constants } from './../utils/constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { favoritesGamesAsyncStorageKey } from './../utils/constants';
 import axios from 'axios';
 
 export const GamesContext = createContext();
 
 const GamesContextProvider = ({ children }) => {
-    const [isLoading, setIsLoading] = useState(false);
-    const [games, setGames] = useState(false);
+    const [games, setGames] = useState([]);
     const [searchedGames, setSearchedGames] = useState({});
-    const [gameFound, setGameFound] = useState(false);
+    const [favoritesGames, setFavoritesGames] = useState([]);
+    const [favoriteGamesStorage, setFavoriteGamesStorage] = useState([]);
+
 
     const fetchGames = async () => {
-        setIsLoading(true);
         try {
             const { data, status } = await axios({
                 baseURL: constants.base_path,
@@ -22,18 +24,14 @@ const GamesContextProvider = ({ children }) => {
 
             if (status === 200) {
                 setGames(data);
-                setIsLoading(false);
             }
         } catch (error) {
-            setIsLoading(false);
             throw error;
         }
     };
 
     const filterGames = searchedGame => {
-        setTimeout(() => {
-            setIsLoading(true);
-        }, 3000);
+        
         if (searchedGame) {
 
             // Profe hice esta función para capitalizar las palabras, ya que no en
@@ -54,26 +52,64 @@ const GamesContextProvider = ({ children }) => {
             );
 
             setSearchedGames(filteredGames);
-            setIsLoading(false);
 
         } else {
             setSearchedGames({});
-            setIsLoading(false);
         }
+    };
+
+    const addFavoriteGame = async (key, favorites) => {
+        try {
+            await AsyncStorage.setItem(key, JSON.stringify(favorites));
+            return true;
+        }
+        catch(err) {
+            return false;
+        }
+    }
+
+    const removeFavoriteGame = async (key, favorites) => {
+        try {
+            await AsyncStorage.removeItem(key);
+            await AsyncStorage.setItem(key, JSON.stringify(favorites));
+            return true;
+        }
+        catch(err) {
+            return false;
+        }
+    }
+
+    const veryfiedFavoritesGamesData = async () => {
+        const asyncStorageSavedData = JSON.parse(
+            await AsyncStorage.getItem(favoritesGamesAsyncStorageKey),
+        );
+
+        if (asyncStorageSavedData) {
+            setFavoriteGamesStorage(asyncStorageSavedData);
+            // setIsFavorite(true);
+        } else {
+            setFavoriteGamesStorage([]);
+        }
+    };
+
+    const handleFavorites = game => {
+        const favorites = Object.assign([], favoritesGames);
+        const index = favorites.findIndex(fav => fav.id === game.id);
+
+        if (index === -1) {
+            favorites.push(game);
+            addFavoriteGame(favoritesGamesAsyncStorageKey, favorites);
+        } else {
+            favorites.splice(index, 1);
+            removeFavoriteGame(favoritesGamesAsyncStorageKey, favorites);
+        }
+
+        setFavoritesGames(favorites);
     };
 
     useEffect(() => {
         fetchGames();
     }, []);
-
-    useEffect(() => {
-        // console.log({searchedGames})
-        if (searchedGames) {
-            setSearchedGames(searchedGames)
-        } else {
-            setSearchedGames({})
-        }
-    }, [searchedGames]);
 
     return (
         <GamesContext.Provider
@@ -82,9 +118,10 @@ const GamesContextProvider = ({ children }) => {
                 filterGames,
                 searchedGames,
                 setSearchedGames,
-                gameFound,
-                isLoading,
-                setIsLoading,
+                handleFavorites,
+                favoritesGames,
+                veryfiedFavoritesGamesData,
+                favoriteGamesStorage,
             }}
         >
             {children}

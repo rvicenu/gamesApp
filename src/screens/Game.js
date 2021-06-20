@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
 import { useRoute } from '@react-navigation/core';
-import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native';
-import ImagesSlider from '../components/ImagesSlider';
-import NotFound from '../components/NotFound';
-import { ScrollView } from 'react-native-gesture-handler';
+import { View, Text, StyleSheet, Image, ScrollView, SafeAreaView } from 'react-native';
+import ImagesSlider from './../components/ImagesSlider';
+import Message from './../components/Message';
+import FavoriteButton from './../components/FavoriteButton';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { favoritesGamesAsyncStorageKey } from './../utils/constants';
+import { useEffect } from 'react/cjs/react.development';
 
 const styles = StyleSheet.create({
     background: {
@@ -62,13 +65,50 @@ const styles = StyleSheet.create({
 const Game = () => {
     const routes = useRoute();
     const [game] = useState(routes.params.data);
+
+    const [isFavorite, setIsFavorite] = useState(false);
+    const [favoriteGames, setFavoriteGames] = useState([]);
+
+    const veryfiedIsFavorites = async () => {
+        const asyncStorageSavedData = JSON.parse(
+            await AsyncStorage.getItem(favoritesGamesAsyncStorageKey),
+        );
+
+        if (asyncStorageSavedData !== null) {
+            if (asyncStorageSavedData.length > 0) {
+                try {
+                    setFavoriteGames(asyncStorageSavedData)
+                    const isFavGame = favoriteGames.filter((favoriteGame) => 
+                        favoriteGame.title.includes(game.title)
+                    );
+        
+                    if (isFavGame.length > 0) {
+                        setIsFavorite(true);
+                    } else {
+                        setIsFavorite(false);
+                    }
+                } catch (err) {
+                    console.log(err)
+                }
+            } else {
+                setIsFavorite(false);
+            }
+        } else {
+            setIsFavorite(false);
+        }
+    };
+
+    useEffect(() => {
+        veryfiedIsFavorites();
+    }, [favoriteGames, isFavorite]);
+
     return (
         <SafeAreaView style={styles.background}>
             <ScrollView>
                 <View style={styles.container}>
                     <Text style={styles.title}> 🎮 {game.title} 🎮 </Text>
                     <Image style={styles.image} source={{uri: game.thumbnail}} />
-
+                    <FavoriteButton isFavorite={isFavorite} game={game} />
                     <View style={styles.containerInfo}>
                         <View style={styles.containerInfoLeft}>
                             <Text style={styles.text}>Platform: </Text>
@@ -90,7 +130,7 @@ const Game = () => {
                     </View>
 
                     { 
-                        !game.screenshots ? <NotFound text="Este juego no tiene screenshots." /> : <ImagesSlider screenshots={game.screenshots} text="Screenshots:" /> 
+                        !game.screenshots ? <Message text="Este juego no tiene screenshots." /> : <ImagesSlider screenshots={game.screenshots} text="Screenshots:" /> 
                     }
                 </View>
             </ScrollView>

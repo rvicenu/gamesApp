@@ -3,7 +3,7 @@ import { TextInput, View, SafeAreaView, StyleSheet } from 'react-native';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import Title from './../components/Title';
 import ListGames from './../components/ListGames';
-import NotFound from './../components/NotFound';
+import Message from './../components/Message';
 import Loading from './../components/Loading';
 import { GamesContext } from './../contexts/GamesContext';
 
@@ -61,7 +61,7 @@ const Search = () => {
                             </Fragment>
                         )
                     : 
-                        <NotFound text="Game not found." />
+                        <Message text="Game not found." />
                 }
         </SafeAreaView>
     );
