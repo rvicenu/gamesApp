@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, SafeAreaView, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import defaultAvatar from './../assets/avatar.png';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { profileAsyncStorageKey } from './../utils/constants';
+import { PhotoContext } from './../contexts/PhotoContext';
 
 const styles = StyleSheet.create({
     background: {
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: 120,
         height: 120,
-        borderRadius: 50,
+        borderRadius: 100,
     },
     editButton: {
         marginTop: 10,
@@ -51,8 +52,9 @@ const styles = StyleSheet.create({
 const Profile = () => {
 
     const navigation = useNavigation();
-    // const [isLoading, setIsLoading] = useState(false);
     const [profileData, setProfileData] = useState({});
+
+    const  { photo } = useContext(PhotoContext);
 
     const [userDefaultData] = useState({
         name: 'Juanito Perez',
@@ -74,12 +76,24 @@ const Profile = () => {
     };
 
     useEffect(() => {
-        veryfiedData(userDefaultData);
+        const timer = setTimeout(() => {
+            veryfiedData(userDefaultData);
+        });
+        
+        return () => {
+            clearTimeout(timer);
+        };
+
     }, [profileData]);
     return (
         <SafeAreaView style={styles.background}>
             <View style={styles.container}>
-                <Image style={styles.avatar} source={defaultAvatar} />
+                {
+                    photo ? 
+                        <Image style={styles.avatar} source={{ uri: photo }} />
+                    : 
+                        <Image style={styles.avatar} source={defaultAvatar} />
+                }
                 <TouchableOpacity style={styles.editButton} onPress={() => navigation.navigate('EditProfile', profileData)}>
                     <Text style={styles.editButtonText}>Edit Profile</Text>
                 </TouchableOpacity>

@@ -99,7 +99,14 @@ const Game = () => {
     };
 
     useEffect(() => {
-        veryfiedIsFavorites();
+        const timer = setTimeout(() => {
+            veryfiedIsFavorites();
+        });
+        
+        return () => {
+            clearTimeout(timer);
+        };
+
     }, [favoriteGames, isFavorite]);
 
     return (

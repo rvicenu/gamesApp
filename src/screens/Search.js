@@ -4,7 +4,6 @@ import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
 import Title from './../components/Title';
 import ListGames from './../components/ListGames';
 import Message from './../components/Message';
-import Loading from './../components/Loading';
 import { GamesContext } from './../contexts/GamesContext';
 
 const styles = StyleSheet.create({

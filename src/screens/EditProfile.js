@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { Fragment, useContext, useState } from 'react';
+import { View, Text, TextInput, Image, SafeAreaView, TouchableOpacity, StyleSheet } from 'react-native';
 import { useRoute } from '@react-navigation/core';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { profileAsyncStorageKey } from './../utils/constants';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import defaultAvatar from './../assets/avatar.png';
+import { PhotoContext } from './../contexts/PhotoContext';
 
 const styles = StyleSheet.create({
     background: {
@@ -24,6 +26,21 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: '#222f3e',
+        textAlign: 'center',
+    },
+    avatar: {
+        alignSelf: 'center',
+        width: 120,
+        height: 120,
+        borderRadius: 100,
+    },
+    avatarText: {
+        color: '#ee5253',
+        padding: 2,
+        backgroundColor: '#341f97',
+        fontWeight: 'bold',
+        marginTop: -40,
+        marginBottom: 30,
         textAlign: 'center',
     },
     textInput: {
@@ -51,6 +68,7 @@ const EditProfile = () => {
     const navigation = useNavigation();
 
     const [profileData] = useState(routes.params);
+    const  { photo } = useContext(PhotoContext);
 
     const [userDataEdit, setUserDataEdit] = useState({
         name: profileData.name,
@@ -74,6 +92,29 @@ const EditProfile = () => {
                 }}
             >  
                 <View>
+
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('Camera')}
+                    >
+                    {
+                        photo ?  
+                            ( 
+                                <Fragment>
+                                    <Image style={styles.avatar} source={{uri: photo}} />
+                                    <Text style={styles.avatarText}>Change Photo</Text>
+                                </Fragment>
+                            )
+                        :
+                            (
+                                <Fragment>
+                                    <Image style={styles.avatar} source={defaultAvatar} />
+                                    <Text style={styles.avatarText}>Change Photo</Text>
+                                </Fragment>
+                            )
+
+                    }
+                    </TouchableOpacity>
+
                     <View style={styles.container}>
                         <Text style={styles.title}>👾 Edit Profile 👾 </Text>
                         <TextInput

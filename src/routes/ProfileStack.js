@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Profile from './../screens/Profile';
 import EditProfile from './../screens/EditProfile';
+import Camera from './../screens/Camera';
 import { SafeAreaView, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 
@@ -54,6 +55,13 @@ const ProfileNavigation = ({navigation}) => (
                     </TouchableOpacity>
                 ),
                 gestureDirection: 'vertical',
+            }}
+        />
+        <ProfileStack.Screen 
+            name="Camera" 
+            component={Camera} 
+            options={{
+                header: () => null
             }}
         />
     </ProfileStack.Navigator>

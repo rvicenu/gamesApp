@@ -162,5 +162,3 @@ class Home extends PureComponent {
 };
 
 export default Home;
-
-// VerifyData En todos los inicios del proceso (en CardGame salen todos)
